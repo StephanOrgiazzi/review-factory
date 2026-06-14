@@ -22,7 +22,7 @@
   ·
   <a href="#usage">Usage</a>
   ·
-  <a href="#why-portable-matters">Why Portable Matters</a>
+  <a href="#why-portable-matters">Portable</a>
 </p>
 
 > Inspired by Cloudflare's excellent article, [Orchestrating AI Code Review at scale](https://blog.cloudflare.com/ai-code-review/). review-factory adapts the multi-agent review orchestration idea into an agent skill.
@@ -64,6 +64,12 @@ With this agentic orchestration you get the best of both worlds: the right level
 | **Generalist** | Fast pass for tiny diffs |
 
 ## Usage
+
+Install the skill with:
+
+```powershell
+npx skills@latest add stephanorgiazzi/review-factory
+```
 
 Ask your agent for a review with the skill name:
 
