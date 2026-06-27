@@ -83,6 +83,7 @@ Conditions:
 Spawn:
 
 - `references/reviewers/correctness.md`
+- `references/reviewers/design.md`
 - `references/reviewers/tests-docs.md`
 
 Add `references/reviewers/performance.md` only if runtime, rendering, DB, network, caching, bundle size, concurrency, or memory behavior changed.
@@ -99,6 +100,7 @@ Spawn:
 
 - `references/reviewers/security.md`
 - `references/reviewers/correctness.md`
+- `references/reviewers/design.md`
 - `references/reviewers/performance.md`
 - `references/reviewers/tests-docs.md`
 - `references/reviewers/release.md`
@@ -127,7 +129,7 @@ After reviewers return:
 
 1. Deduplicate overlapping findings.
 2. Move findings to the right category if a reviewer misclassified them.
-3. Drop speculative issues, nitpicks, style-only comments, convention-only suggestions, and findings contradicted by the source.
+3. Drop speculative issues, nitpicks, style-only comments, unsupported convention-only suggestions, and findings contradicted by the source.
 4. If a finding is uncertain but serious, verify by reading the relevant files.
 5. Bias toward approval: one isolated warning is not a block unless it creates concrete production or security risk.
 

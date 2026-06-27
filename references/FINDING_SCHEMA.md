@@ -6,7 +6,7 @@ Return:
 <findings>
   <finding>
     <severity>critical|warning|suggestion</severity>
-    <category>security|correctness|performance|tests-docs|release|agents-md|general</category>
+    <category>security|correctness|performance|tests-docs|design|release|agents-md|general</category>
     <file>path/to/file.ext</file>
     <line>123</line>
     <title>Short concrete title</title>

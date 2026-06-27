@@ -57,6 +57,7 @@ With this agentic orchestration you get the best of both worlds: the right level
 |:---|:---|
 | **Security** | Exploitable vulnerabilities, auth breaks, unsafe secrets, injection paths |
 | **Correctness** | Concrete bugs, broken state, edge cases, regressions |
+| **Design & maintainability** | Costly YAGNI, DRY, modularity, layering, testability, and domain-language violations |
 | **Performance** | Runtime, rendering, DB, network, caching, memory, bundle-size regressions |
 | **Tests & Docs** | Missing coverage for risky behavior, stale docs, broken examples | 
 | **Release** | Deployment, migration, packaging, config, changelog, compatibility risk |
