@@ -86,6 +86,31 @@ Run review-factory on the last commit.
 Run review-factory on this PR diff and focus on security.
 ```
 
+### Optional Jev routing
+
+[TypeSafe's Jev](https://docs.typesafe.ai/) can flag review domains that deserve
+specialist attention, including risky behavior in small diffs with unremarkable
+filenames. Enable it with:
+
+```text
+Use review-factory with Jev routing to review this branch against main.
+```
+
+The agent prepares the review context and runs the bundled helper. Live routing
+requires Node.js 20+ or Bun, `TYPESAFE_API_KEY`, and explicit `--live` mode; it sends
+that context to TypeSafe. No packages are required. Without it, review-factory
+works as before.
+
+Jev selects relevant subagents and recommends a thinking level (`low`, `medium`,
+or `high`) for each. Straightforward checks use a cheaper capable model; complex
+or uncertain work receives higher effort and a stronger capable model. Existing
+risk rules remain the minimum reviewer coverage. Service failures fall back to
+the coordinator. Coding agents still investigate findings and the judge
+makes the final decision. This targets missed review domains, with no claimed
+cost or accuracy gains until evaluated on real reviews.
+
+See [setup, input format, and fallback behavior](./references/JEV_ROUTING.md).
+
 ---
 
 ## Portable
