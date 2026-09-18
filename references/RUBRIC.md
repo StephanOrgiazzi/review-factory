@@ -4,7 +4,11 @@ Risk tier:
 
 - `trivial`: <= 10 changed lines, <= 20 changed files, no security-sensitive file.
 - `lite`: <= 100 changed lines, <= 20 changed files, no security-sensitive file.
-- `full`: security-sensitive file changed, > 100 changed lines, or > 50 changed files.
+- `full`: security-sensitive file changed, > 100 changed lines, or > 20 changed files.
+
+These tiers are minimum coverage. The 21–50-file range is full rather than falling
+between tiers. Optional Jev routing (`JEV_ROUTING.md`) may add specialists or
+escalate to full; it never downgrades these requirements or overrides user focus.
 
 Security-sensitive path hints:
 

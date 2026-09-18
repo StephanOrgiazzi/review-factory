@@ -10,7 +10,9 @@ Reviewer behavior lives in `references/reviewers/*.md`. The parent session reads
 ## Operating model
 
 - Parent/orchestrator: current session model and reasoning settings
-- Child reviewers: request a cheaper, lower-reasoning model tier and review-only/read-only behavior when spawning subagents.
+- Child reviewers: default to a cheaper, lower-reasoning model tier; when Jev
+  routing is enabled, apply its per-reviewer effort plan as described below.
+  Always request review-only/read-only behavior.
 - Do not edit code during review.
 - Review changed code and directly affected paths only.
 - Prefer concrete bugs over broad advice.
@@ -21,7 +23,10 @@ Reviewer behavior lives in `references/reviewers/*.md`. The parent session reads
 Use model tiers instead of fixed model IDs:
 
 - Coordinator / judge: the strongest available reasoning model for the current environment, because it deduplicates reviewer output, rejects false positives, and makes the final risk call.
-- Specialist reviewers: a materially cheaper capable coding model with low or no reasoning
+- Specialist reviewers: by default, a materially cheaper capable coding model
+  with low or no reasoning. With Jev routing, use `reviewerPlan` to allocate
+  low/medium/high effort per selected role and a stronger capable model for high
+  effort. Preserve explicit user model/effort choices and report conflicts.
 
 The goal is to spend premium tokens only on the coordination and final judgment step, and run parallel specialists on lower-cost models. Concrete examples of the intended downgrade pattern:
 
@@ -55,6 +60,13 @@ Before spawning reviewers, build a small review context from the repository:
    - notable risky paths
    - obvious test/build commands
    - user custom instructions
+6. If Jev routing is enabled for this review, read `references/JEV_ROUTING.md` and
+   run `scripts/route-review.mjs` on the prepared context before spawning reviewers.
+   Its output can add reviewers or escalate risk; it cannot remove the rubric's
+   required reviewers, satisfy a review, or decide a verdict. On fallback, perform
+   the ordinary coordinator assessment. Skip the optional integration otherwise.
+   Consume `reviewerPlan` for per-subagent thinking levels, mapping its portable
+   tiers to the actual spawn API as specified in that reference.
 
 ## Risk tiers
 
@@ -94,7 +106,7 @@ Conditions:
 
 - security-sensitive file changed, or
 - > 100 changed lines, or
-- > 50 changed files
+- > 20 changed files (including the 21–50-file range)
 
 Spawn:
 
@@ -117,11 +129,17 @@ For each selected reviewer:
    - the reviewer-specific prompt
    - instruction to return only XML matching `references/FINDING_SCHEMA.md`
    - instruction to avoid code edits
+   - the selected model and reasoning effort from `reviewerPlan` when available;
+     otherwise use the default model policy
 4. Wait for all reviewers.
 
 Suggested wording:
 
 > Spawn one review-only subagent for this reviewer using a cheaper capable coding model than the coordinator, with low or disabled reasoning. Give it the shared review context and the reviewer prompt. Ask it to inspect only changed/affected files, avoid code edits, and return only XML findings.
+
+When Jev provides an effort plan, replace the default model/effort clause with
+that reviewer's mapped settings. Keep the coordinator/judge on the strongest
+available reasoning model; Jev routes work and does not replace that judge.
 
 ## Judge pass
 
